@@ -20,8 +20,7 @@ SelectorState::SelectorState(Config config)
 
 bool SelectorState::AddSelection(const ControlSelection &selection, TimePoint now)
 {
-	std::array<std::uint8_t, 4> address{};
-	if (!ParseIPv4Octets(selection.client_ip, address) || selection.login_source_port == 0 ||
+	if (!IsValidIPv4(selection.client_ip) || selection.login_source_port == 0 ||
 		m_config.worlds.find(selection.world_short_name) == m_config.worlds.end()) {
 		return false;
 	}

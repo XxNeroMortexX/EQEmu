@@ -81,6 +81,12 @@ bool IsValidWorldShortName(const std::string &name)
 	return true;
 }
 
+bool IsValidIPv4(const std::string &address)
+{
+	std::array<std::uint8_t, 4> octets{};
+	return ParseIPv4Octets(address, octets);
+}
+
 bool IsLoopbackIPv4(const std::string &address)
 {
 	std::array<std::uint8_t, 4> octets{};

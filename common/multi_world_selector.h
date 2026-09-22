@@ -53,6 +53,7 @@ struct ControlSelection {
 };
 
 bool IsValidWorldShortName(const std::string &name);
+bool IsValidIPv4(const std::string &address);
 bool IsLoopbackIPv4(const std::string &address);
 Config ParseConfig(const Json::Value &document);
 ConfigFileLoadStatus LoadConfigFile(const std::string &path, Config &config, std::string &error);
