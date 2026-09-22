@@ -4,6 +4,7 @@ add_library(eqemu_world_selector_core STATIC
     selector_state.cpp
     selector_state.h
     ../common/json/jsoncpp.cpp
+    ../common/multi_world_selector.cpp
     ../common/multi_world_selector.h
 )
 target_include_directories(eqemu_world_selector_core PUBLIC ..)
