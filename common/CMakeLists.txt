@@ -61,6 +61,7 @@ set(common_sources
     md5.cpp
     memory_buffer.cpp
     memory_mapped_file.cpp
+    multi_world_selector.cpp
     multi_world_selector_notifier.cpp
     memory/ksm.cpp
     misc_functions.cpp
