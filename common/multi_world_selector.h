@@ -56,9 +56,6 @@ bool IsValidWorldShortName(const std::string &name);
 bool IsLoopbackIPv4(const std::string &address);
 Config ParseConfig(const Json::Value &document);
 ConfigFileLoadStatus LoadConfigFile(const std::string &path, Config &config, std::string &error);
-void WriteUInt16(std::uint8_t *destination, std::uint16_t value);
-std::uint16_t ReadUInt16(const std::uint8_t *source);
-bool ParseIPv4Octets(const std::string &address, std::array<std::uint8_t, 4> &octets);
 bool EncodeControlPacket(const ControlSelection &selection, std::array<std::uint8_t, ControlPacketSize> &packet);
 bool DecodeControlPacket(const std::uint8_t *data, std::size_t size, ControlSelection &selection);
 
