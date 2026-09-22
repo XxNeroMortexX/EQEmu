@@ -18,21 +18,7 @@
 
 namespace EQ::Net::MultiWorldSelector {
 
-bool IsValidWorldShortName(const std::string &name)
-{
-	if (name.empty() || name.size() > MaxWorldShortNameLength) {
-		return false;
-	}
-
-	for (const auto c : name) {
-		const auto value = static_cast<unsigned char>(c);
-		if (!std::isalnum(value) && c != '_' && c != '-' && c != '.' && c != ' ') {
-			return false;
-		}
-	}
-
-	return true;
-}
+namespace {
 
 bool ParseIPv4Octets(const std::string &address, std::array<std::uint8_t, 4> &octets)
 {
@@ -64,6 +50,35 @@ bool ParseIPv4Octets(const std::string &address, std::array<std::uint8_t, 4> &oc
 	}
 
 	return start == address.size();
+}
+
+void WriteUInt16(std::uint8_t *destination, std::uint16_t value)
+{
+	destination[0] = static_cast<std::uint8_t>((value >> 8) & 0xff);
+	destination[1] = static_cast<std::uint8_t>(value & 0xff);
+}
+
+std::uint16_t ReadUInt16(const std::uint8_t *source)
+{
+	return static_cast<std::uint16_t>((static_cast<std::uint16_t>(source[0]) << 8) | source[1]);
+}
+
+} // namespace
+
+bool IsValidWorldShortName(const std::string &name)
+{
+	if (name.empty() || name.size() > MaxWorldShortNameLength) {
+		return false;
+	}
+
+	for (const auto c : name) {
+		const auto value = static_cast<unsigned char>(c);
+		if (!std::isalnum(value) && c != '_' && c != '-' && c != '.' && c != ' ') {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 bool IsLoopbackIPv4(const std::string &address)
@@ -139,17 +154,6 @@ ConfigFileLoadStatus LoadConfigFile(const std::string &path, Config &config, std
 
 	config = ParseConfig(document);
 	return ConfigFileLoadStatus::Loaded;
-}
-
-void WriteUInt16(std::uint8_t *destination, std::uint16_t value)
-{
-	destination[0] = static_cast<std::uint8_t>((value >> 8) & 0xff);
-	destination[1] = static_cast<std::uint8_t>(value & 0xff);
-}
-
-std::uint16_t ReadUInt16(const std::uint8_t *source)
-{
-	return static_cast<std::uint16_t>((static_cast<std::uint16_t>(source[0]) << 8) | source[1]);
 }
 
 bool EncodeControlPacket(
